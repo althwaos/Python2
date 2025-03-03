@@ -39,7 +39,7 @@ model = joblib.load('RandomForestClassifier.pkl')
 scaler = pickle.load(open("scaler_RandomForest.pkl", "rb"))
 
 # Load company data
-company_data = pd.read_csv('us-companies.csv')
+#company_data = pd.read_csv('us-companies.csv')
 
 # Streamlit user interface
 st.title("Stock Prediction App")
@@ -48,12 +48,10 @@ ticker = st.selectbox("Select Ticker", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
 # Show logo and company details
 if ticker in logo_urls:
     st.image(logo_urls[ticker])
-    details = company_data[company_data['Ticker'] == ticker]
-    st.write(details)  # Displaying the dataframe directly
-
-# Selecting and displaying static company details
-static_details = details[['Currency', 'Fiscal Year', 'Total Assets', 'Total Equity']]
-st.write(static_details)
+    #details = company_data[company_data['Ticker'] == ticker]
+    #d displaying static company details
+#static_details = details[['Currency', 'Fiscal Year', 'Total Assets', 'Total Equity']]
+#st.write(static_details)
 
 # Fetching stock data and predicting
 if st.button("Predict Next Day"):
