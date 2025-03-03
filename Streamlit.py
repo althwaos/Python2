@@ -8,7 +8,7 @@ import requests
 def prepare_data(df):
     df.columns = [
         'Date', 'Dividend Paid', 'Common Shares Outstanding',
-        'Close', 'Adjusted Closing Price', 'High', 'Low', 'Open', 'Volume'
+        'Close', 'Adj. Close', 'High', 'Low', 'Open', 'Volume'
     ]
     df['Date'] = pd.to_datetime(df['Date'])
     df['week'] = df['Date'].dt.isocalendar().week
