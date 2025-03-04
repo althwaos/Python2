@@ -40,7 +40,11 @@ logo_urls = {
     'META': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/meta.png',
 }
 
-company_data = pd.read_csv('us-companies.csv', encoding='utf-8')
+csv_url = 'https://raw.githubusercontent.com/althwaos/Python2/refs/heads/main/us-companies.csv'
+
+# Load the CSV file directly into a pandas DataFrame
+company_data = pd.read_csv(csv_url)
+
 
 
 # Streamlit user interface
