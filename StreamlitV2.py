@@ -34,7 +34,7 @@ scaler = pickle.load(open("scaler_RandomForest.pkl", "rb"))
 
 logo_urls = {
     'TSLA': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/tsla.png',
-    'AAPL': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/aapl.png',
+    'AAPL': 'https://github.com/althwaos/Python2/blob/main/Apple.png',
     'MSFT': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/msft.png',
     'NVDA': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/nvda.png',
     'META': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/meta.png',
