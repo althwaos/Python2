@@ -60,24 +60,32 @@ elif page == "Predict Next Day":
     ticker = st.selectbox("Select Ticker", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
     if st.button("Predict"):
         url = f"https://backend.simfin.com/api/v3/companies/prices/compact?ticker={ticker}&start=2025-01-01&end=2025-06-01"
-        headers = {'Authorization': 'Your_API_Key'}
-        response = requests.get(url, headers=headers)
-        data = response.json()
-        df = pd.DataFrame(data[0]['data'])
-        df = prepare_data(df)  
-        
-        plt.figure(figsize=(10, 4))
-        plt.plot(pd.to_datetime(df['Date']), df['Close'], label='Close Price')
-        plt.title('Close Price by Day for the Last Year')
-        plt.xlabel('Date')
-        plt.ylabel('Close Price ($)')
-        plt.legend()
-        st.pyplot(plt)
+    headers = {'Authorization': 'fde00d2f-38ad-43f3-9a83-012077d42da6'}
+    response = requests.get(url, headers=headers)
+    data = response.json()
+    df = pd.DataFrame(data[0]['data'])
+    df = prepare_data(df)  
+    
+    plt.figure(figsize=(10, 4))
+    plt.plot(pd.to_datetime(df['Date']), df['Close'], label='Close Price')
+    plt.title('Close Price by Day for the Last Year')
+    plt.xlabel('Date')
+    plt.ylabel('Close Price ($)')
+    plt.legend()
+    st.pyplot(plt)
 
-        columns_to_scale = ['Open', 'High', 'Low', 'Close', 'Adj. Close', 'Volume', 'week', 'First_day', 'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7', 'V_EMA_7', 'EMA_14', 'V_EMA_14']
-        X_scaled = scaler.transform(df[columns_to_scale])
-        prediction = model.predict(X_scaled)
-        st.write("Prediction for next day:", "Positive" if prediction[0] else "Negative")
+    # Assuming 'columns_to_scale' is defined elsewhere in your script
+    columns_to_scale = ['Open', 'High', 'Low', 'Close', 'Adj. Close',
+       'Volume', 'week', 'First_day',
+       'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7',
+       'V_EMA_7', 'EMA_14', 'V_EMA_14']
+    
+    # Scale data
+    X_scaled = scaler.transform(df[columns_to_scale])
+    
+    # Predict
+    prediction = model.predict(X_scaled)
+    st.write("Prediction for next day:", "Positive" if prediction[0] else "Negative")
 
 elif page == "Show Financials":
     st.title("Financial Overview")
