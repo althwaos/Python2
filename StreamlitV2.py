@@ -40,11 +40,8 @@ logo_urls = {
     'META': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/meta.png',
 }
 
-csv_url = 'https://raw.githubusercontent.com/althwaos/Python2/refs/heads/main/us-companies.csv'
-
 # Load the CSV file directly into a pandas DataFrame
-company_data = pd.read_csv(csv_url)
-
+company_data = pd.read_excel("us-companies exc.xlsx")
 
 
 # Streamlit user interface
@@ -86,23 +83,4 @@ if st.button("Predict Next Day"):
 if st.button("Show Financials"):
     # Filter data for the selected company
     company_financials = company_data[company_data['Ticker'] == ticker]
-    
-    # Total Liabilities Graph
-    plt.figure(figsize=(10, 4))
-    plt.plot(company_financials['Fiscal Year'].astype(str) + ' ' + company_financials['Fiscal Period'], company_financials['Total Liabilities'], marker='o', linestyle='-')
-    plt.title('Total Liabilities by Quarter')
-    plt.xlabel('Fiscal Year and Quarter')
-    plt.ylabel('Total Liabilities ($ in millions)')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    st.pyplot(plt)
-    
-    # Total Current Assets Graph
-    plt.figure(figsize=(10, 4))
-    plt.plot(company_financials['Fiscal Year'].astype(str) + ' ' + company_financials['Fiscal Period'], company_financials['Total Current Assets'], marker='o', linestyle='-')
-    plt.title('Total Current Assets by Quarter')
-    plt.xlabel('Fiscal Year and Quarter')
-    plt.ylabel('Total Current Assets ($ in millions)')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    st.pyplot(plt)
+    st.dataframe(company_financials) 
