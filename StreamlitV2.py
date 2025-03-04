@@ -40,7 +40,7 @@ logo_urls = {
     'META': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/meta.png',
 }
 
-company_data = pd.read_csv('us-companies.csv')
+company_data = pd.read_csv('us-companies.csv', encoding='utf-8')
 
 
 # Streamlit user interface
