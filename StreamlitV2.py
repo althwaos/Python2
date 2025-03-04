@@ -32,13 +32,6 @@ def prepare_data(df):
 model = joblib.load('RandomForestClassifier.pkl')
 scaler = pickle.load(open("scaler_RandomForest.pkl", "rb"))
 
-logo_urls = {
-    'TSLA': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/tsla.png',
-    'AAPL': 'https://github.com/althwaos/Python2/blob/main/Apple.png',
-    'MSFT': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/msft.png',
-    'NVDA': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/nvda.png',
-    'META': 'https://raw.githubusercontent.com/your_username/your_repo/main/logos/meta.png',
-}
 
 # Load the CSV file directly into a pandas DataFrame
 company_data = pd.read_excel("us-companies exc.xlsx")
@@ -47,9 +40,6 @@ company_data = pd.read_excel("us-companies exc.xlsx")
 # Streamlit user interface
 st.title("Stock Prediction App")
 ticker = st.selectbox("Select Ticker", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
-
-if ticker in logo_urls:
-    st.image(logo_urls[ticker], width=200)
 
 if st.button("Predict Next Day"):
     url = f"https://backend.simfin.com/api/v3/companies/prices/compact?ticker={ticker}&start=2025-01-01&end=2025-06-01"
