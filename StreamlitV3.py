@@ -91,4 +91,5 @@ elif page == "Predict Next Day 🔮":
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
     ticker = st.selectbox("Select Ticker for Financials", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
-    company_financials =
+    company_financials = company_data[company_data['Ticker'] == ticker]
+    st.dataframe(company_financials)
