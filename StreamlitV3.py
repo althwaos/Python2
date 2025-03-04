@@ -46,6 +46,7 @@ if page == "Overview 📄":
 
         ### Tools and Resources 🔧
         - **Python**: Utilized for comprehensive data processing and machine learning tasks.
+        - **GitHub**: Utilized as the central repository for all code, facilitating seamless collaboration and version control throughout the project.
         - **Streamlit**: Employed to develop an interactive web application that showcases our predictive models.
         - **ChatGPT**: Used as a coding assistant to help debug and optimize our codebase.
 
