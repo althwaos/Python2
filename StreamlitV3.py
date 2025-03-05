@@ -4,10 +4,52 @@ import joblib
 import pickle
 import requests
 import matplotlib.pyplot as plt
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+
+# Define a class to interact with the SimFin API
+class PySimFin:
+    def __init__(self, api_key):
+        self.base_url = "https://backend.simfin.com/api/v3"
+        self.headers = {'Authorization': api_key}
+        logging.info("PySimFin instance created with API key.")
+
+    def get_share_prices(self, ticker, start, end):
+        url = f"{self.base_url}/companies/prices/compact?ticker={ticker}&start={start}&end={end}"
+        try:
+            response = requests.get(url, headers=self.headers)
+            response.raise_for_status()  # Will raise an HTTPError for bad requests (400+)
+            data = response.json()
+            df = pd.DataFrame(data[0]['data'])
+            return df
+        except requests.RequestException as e:
+            logging.error(f"Request failed: {e}")
+            return pd.DataFrame()
+
+    def get_financial_statement(self, ticker, start, end):
+        url = f"{self.base_url}/companies/statements/compact?ticker={ticker}&start={start}&end={end}"
+        try:
+            response = requests.get(url, headers=self.headers)
+            response.raise_for_status()
+            data = response.json()
+            df = pd.DataFrame(data[0]['data'])
+            return df
+        except requests.RequestException as e:
+            logging.error(f"Request failed: {e}")
+            return pd.DataFrame()
 
 # Load your model and scaler
 model = joblib.load('RandomForestClassifier.pkl')
 scaler = pickle.load(open("scaler_RandomForest.pkl", "rb"))
+
+# Initialize the PySimFin API wrapper
+simfin_api = PySimFin(api_key='fde00d2f-38ad-43f3-9a83-012077d42da6')
+
+# Streamlit app setup
+st.sidebar.title("Navigation 🧭")
+page = st.sidebar.radio("Select a Page:", ["Overview 📄", "Predict Next Day 🔮", "Show Financials 📊"])
 
 # Define a function to prepare data
 def prepare_data(df):
@@ -30,10 +72,6 @@ def prepare_data(df):
     df['EMA_14'] = df['Close'].ewm(span=14, adjust=False).mean()
     df['V_EMA_14'] = df['Volume'].ewm(span=14, adjust=False).mean()
     return df
-
-# Define the page layout
-st.sidebar.title("Navigation 🧭")
-page = st.sidebar.radio("Select a Page:", ["Overview 📄", "Predict Next Day 🔮", "Show Financials 📊"])
 
 # Load the CSV file directly into a pandas DataFrame
 company_data = pd.read_excel("us-companies exc.xlsx")
@@ -62,32 +100,21 @@ elif page == "Predict Next Day 🔮":
     st.title("Stock Prediction App 🔍")
     ticker = st.selectbox("Select Ticker", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
     if st.button("Predict 🔮"):
-        url = f"https://backend.simfin.com/api/v3/companies/prices/compact?ticker={ticker}&start=2025-01-01&end=2025-06-01"
-        headers = {'Authorization': 'fde00d2f-38ad-43f3-9a83-012077d42da6'}
-        response = requests.get(url, headers=headers)
-        data = response.json()
-        df = pd.DataFrame(data[0]['data'])
-        df = prepare_data(df)  
-        
-        plt.figure(figsize=(10, 4))
-        plt.plot(pd.to_datetime(df['Date']), df['Close'], label='Close Price')
-        plt.title('Close Price by Day for the Last Year')
-        plt.xlabel('Date')
-        plt.ylabel('Close Price ($)')
-        plt.legend()
-        st.pyplot(plt)
+        df = simfin_api.get_share_prices(ticker, "2025-01-01", "2025-06-01")
+        if not df.empty:
+            df = prepare_data(df)
+            plt.figure(figsize=(10, 4))
+            plt.plot(pd.to_datetime(df['Date']), df['Close'], label='Close Price')
+            plt.title('Close Price by Day for the Last Year')
+            plt.xlabel('Date')
+            plt.ylabel('Close Price ($)')
+            plt.legend()
+            st.pyplot(plt)
 
-        columns_to_scale = ['Open', 'High', 'Low', 'Close', 'Adj. Close',
-           'Volume', 'week', 'First_day',
-           'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7',
-           'V_EMA_7', 'EMA_14', 'V_EMA_14']
-        
-        # Scale data
-        X_scaled = scaler.transform(df[columns_to_scale])
-        
-        # Predict
-        prediction = model.predict(X_scaled)
-        st.write("Prediction for next day:", "Positive" if prediction[0] else "Negative")
+            columns_to_scale = ['Open', 'High', 'Low', 'Close', 'Adj. Close', 'Volume', 'week', 'First_day', 'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7', 'V_EMA_7', 'EMA_14', 'V_EMA_14']
+            X_scaled = scaler.transform(df[columns_to_scale])
+            prediction = model.predict(X_scaled)
+            st.write("Prediction for next day:", "Positive" if prediction[0] else "Negative")
 
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
