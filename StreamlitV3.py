@@ -41,8 +41,8 @@ class PySimFin:
             return pd.DataFrame()
 
 # Load your model and scaler
-model = joblib.load('RandomForestClassifier.pkl')
-scaler = pickle.load(open("scaler_RandomForest.pkl", "rb"))
+model = joblib.load('DecisionTreeClassifier.pkl')
+scaler = pickle.load(open("scaler_DecisionTree.pkl", "rb"))
 
 # Initialize the PySimFin API wrapper
 simfin_api = PySimFin(api_key='fde00d2f-38ad-43f3-9a83-012077d42da6')
@@ -57,6 +57,7 @@ def prepare_data(df):
         'Date', 'Dividend Paid', 'Common Shares Outstanding',
         'Close', 'Adj. Close', 'High', 'Low', 'Open', 'Volume'
     ]
+    df['Ticker_cat'] = ticker
     df['Date'] = pd.to_datetime(df['Date'])
     df['week'] = df['Date'].dt.isocalendar().week
     df['First_day'] = df['week'] != df['week'].shift(1)
