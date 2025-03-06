@@ -41,7 +41,7 @@ class PySimFin:
             return pd.DataFrame()
 
 ticker_mapping = {
-    'APPL': 1,
+    'AAPL': 1,
     'META': 2,
     'MSFT': 3,
     'NVDA': 4,
