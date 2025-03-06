@@ -40,6 +40,14 @@ class PySimFin:
             logging.error(f"Request failed: {e}")
             return pd.DataFrame()
 
+ticker_mapping = {
+    'APPL': 1,
+    'META': 2,
+    'MSFT': 3,
+    'NVDA': 4,
+    'TSLA': 5,
+    # Add more tickers as needed
+}
 # Load your model and scaler
 model = joblib.load('DecisionTreeClassifier.pkl')
 scaler = pickle.load(open("scaler_DecisionTree.pkl", "rb"))
@@ -57,7 +65,6 @@ def prepare_data(df):
         'Date', 'Dividend Paid', 'Common Shares Outstanding',
         'Close', 'Adj. Close', 'High', 'Low', 'Open', 'Volume'
     ]
-    df['Ticker_cat'] = ticker
     df['Date'] = pd.to_datetime(df['Date'])
     df['week'] = df['Date'].dt.isocalendar().week
     df['First_day'] = df['week'] != df['week'].shift(1)
@@ -104,6 +111,7 @@ elif page == "Predict Next Day 🔮":
         df = simfin_api.get_share_prices(ticker, "2025-01-01", "2025-06-01")
         if not df.empty:
             df = prepare_data(df)
+            df['Ticker_cat'] = ticker_mapping[ticker]
             plt.figure(figsize=(10, 4))
             plt.plot(pd.to_datetime(df['Date']), df['Close'], label='Close Price')
             plt.title('Close Price by Day for the Last Year')
