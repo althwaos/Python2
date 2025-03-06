@@ -112,7 +112,7 @@ elif page == "Predict Next Day 🔮":
             plt.legend()
             st.pyplot(plt)
 
-            columns_to_scale = ['Open', 'High', 'Low', 'Close', 'Adj. Close', 'Volume', 'week', 'First_day', 'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7', 'V_EMA_7', 'EMA_14', 'V_EMA_14']
+            columns_to_scale = ['Ticker_cat','Open', 'High', 'Low', 'Close', 'Adj. Close', 'Volume', 'week', 'First_day', 'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7', 'V_EMA_7', 'EMA_14', 'V_EMA_14']
             X_scaled = scaler.transform(df[columns_to_scale])
             prediction = model.predict(X_scaled)
             st.write("Prediction for next day:", "Positive" if prediction[0] else "Negative")
