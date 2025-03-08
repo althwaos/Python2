@@ -97,6 +97,29 @@ if page == "Overview 📄":
         - **GitHub**: Utilized as the central repository for all code, facilitating seamless collaboration and version control throughout the project.
         - **Streamlit**: Employed to develop an interactive web application that showcases our predictive models.
         - **ChatGPT**: Used as a coding assistant to help debug and optimize our codebase.
+             
+        ### Steps to Complete the Project 📈
+        - **Stock Market Research**:
+        - Conduct thorough research on stock market trends and factors influencing stock prices. Analyze historical data to identify patterns and potential predictors of stock movements.
+
+        - **Data Extraction - Batch Data**:
+        - Extract historical stock data from financial databases and files. This was used to download three main files companies details, share price, and balance sheet details.
+
+        - **Data Extraction - API**:
+        - Implement real-time data extraction via financial API. This was used to automate the predictions based on user selection in the final web page.
+
+        - **Data Cleaning**:
+        - Clean the extracted data by handling missing values, adding new columns based on business need, and ensuring data consistency. This step is vital to prepare the data for accurate and efficient model training.
+
+        - **ML Model Development**:
+        - Design and train machine learning models using the cleaned data. Explore various algorithms like Decision Trees, Random Forest, and Gradient Boosting to find the best predictor for stock price movements.
+
+        - **Testing the model with the API**:
+        - Integrate the trained model with the stock data API to test its performance in a real-world scenario.
+
+        - **User-experience Web Page Development**:
+        - Develop a user-friendly web interface using Streamlit. This interface should allow users to select stocks, view predictions, and receive updates on stock movements. Ensure the page is intuitive and provides a seamless experience with visual representations of data and predictions.
+
 
         ### Team Overview (Group 8) 👥
         - **Omer Altwaini**: Led the data extraction and ETL processes, ensuring the data integrity needed for effective model training.
@@ -126,7 +149,7 @@ elif page == "Predict Next Day 🔮":
             columns_to_scale = ['Ticker_cat','Open', 'High', 'Low', 'Close', 'Adj. Close', 'Volume', 'week', 'First_day', 'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7', 'V_EMA_7', 'EMA_14', 'V_EMA_14']
             X_scaled = scaler.transform(df[columns_to_scale])
             prediction = model.predict(X_scaled)
-            st.write("Prediction for next day:", "Positive" if prediction[0] else "Negative")
+            st.write("Prediction for next day:", "🟢 Positive 🟢" if prediction[0] else "🟠 Negative 🟠")
 
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
