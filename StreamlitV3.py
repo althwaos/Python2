@@ -82,7 +82,7 @@ def prepare_data(df):
     return df
 
 # Load the CSV file directly into a pandas DataFrame
-company_data = pd.read_excel("us-companies exc.xlsx")
+company_data = pd.read_csv('us-companies.csv', sep=";")
 BS = pd.read_csv('us-balance-quarterly.csv', sep=";")
 BS['YearQuarter'] = BS['Fiscal Year'].astype(str) + BS['Fiscal Period']
 
