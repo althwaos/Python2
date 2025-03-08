@@ -134,9 +134,10 @@ elif page == "Show Financials 📊":
     company_financials = company_data[company_data['Ticker'] == ticker]
     company_financials = company_financials[['Company Name', 'Number Employees', 
        'Market', 'Main Currency']]
+    BusinessSummary = company_financials['Business Summary']
     st.dataframe(company_financials)
     st.title("Company Overview")
-    st.write(company_financials['Business Summary'])
+    st.write(BusinessSummary)
 
     BS = BS[BS['Ticker'] == ticker]
     plt.figure(figsize=(10, 4))
