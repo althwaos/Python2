@@ -83,6 +83,8 @@ def prepare_data(df):
 
 # Load the CSV file directly into a pandas DataFrame
 company_data = pd.read_excel("us-companies exc.xlsx")
+BS = pd.read_csv('us-balance-quarterly.csv', sep=";")
+BS['YearQuarter'] = BS['Fiscal Year'].astype(str) + BS['Fiscal Period']
 
 if page == "Overview 📄":
     st.title("Project Overview 🌟")
@@ -119,6 +121,15 @@ elif page == "Predict Next Day 🔮":
             plt.ylabel('Close Price ($)')
             plt.legend()
             st.pyplot(plt)
+
+            BS['Ticker'] = ticker
+            plt.figure(figsize=(10, 4))
+            plt.bar(BS['YearQuarter'][:12], BS['Total Assets'][:12], label='Total Assetes by Quarter')
+            plt.title('Total Assetes by Quarter')
+            plt.xlabel('YearQuarter')
+            plt.ylabel('Total Assetes')
+            plt.legend()
+
 
             columns_to_scale = ['Ticker_cat','Open', 'High', 'Low', 'Close', 'Adj. Close', 'Volume', 'week', 'First_day', 'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7', 'V_EMA_7', 'EMA_14', 'V_EMA_14']
             X_scaled = scaler.transform(df[columns_to_scale])
