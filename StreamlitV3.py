@@ -132,9 +132,11 @@ elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
     ticker = st.selectbox("Select Ticker for Financials", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
     company_financials = company_data[company_data['Ticker'] == ticker]
-    company_financials = company_financials[['Company Name','Business Summary', 'Number Employees', 
+    company_financials = company_financials[['Company Name', 'Number Employees', 
        'Market', 'Main Currency']]
     st.dataframe(company_financials)
+    st.title("Company Overview")
+    st.write(company_financials['Business Summary'])
 
     BS = BS[BS['Ticker'] == ticker]
     plt.figure(figsize=(10, 4))
