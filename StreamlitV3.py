@@ -137,7 +137,7 @@ elif page == "Show Financials 📊":
     BusinessSummary = company_financials['Business Summary']
     st.dataframe(company_financials_2)
     st.title("Company Overview")
-    st.markdown(f"**Business Summary:** {BusinessSummary}")
+    st.info(BusinessSummary)
 
     BS = BS[BS['Ticker'] == ticker]
     plt.figure(figsize=(10, 4))
