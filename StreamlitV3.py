@@ -132,10 +132,10 @@ elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
     ticker = st.selectbox("Select Ticker for Financials", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
     company_financials = company_data[company_data['Ticker'] == ticker]
-    company_financials = company_financials[['Company Name', 'Number Employees', 
+    company_financials_2 = company_financials[['Business Summary', 'Company Name', 'Number Employees', 
        'Market', 'Main Currency']]
     BusinessSummary = company_financials['Business Summary']
-    st.dataframe(company_financials)
+    st.dataframe(company_financials_2)
     st.title("Company Overview")
     st.write(BusinessSummary)
 
