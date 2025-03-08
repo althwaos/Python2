@@ -154,15 +154,6 @@ elif page == "Show Financials 📊":
 
     BS = BS[BS['Ticker'] == ticker]
     plt.figure(figsize=(10, 4))
-    plt.bar(BS['YearQuarter'][:12], BS['Total Assets'][:12], label='Total Assetes by Quarter')
-    plt.title('Total Assetes by Quarter')
-    plt.xlabel('YearQuarter')
-    plt.ylabel('Total Assetes')
-    plt.legend()
-    st.pyplot(plt)
-
-    BS = BS[BS['Ticker'] == ticker]
-    plt.figure(figsize=(10, 4))
     plt.bar(BS['YearQuarter'][:12], BS['Total Equity'][:12], label='Total Equity by Quarter')
     plt.title('Total Equity by Quarter')
     plt.xlabel('YearQuarter')
