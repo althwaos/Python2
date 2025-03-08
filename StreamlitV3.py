@@ -122,15 +122,7 @@ elif page == "Predict Next Day 🔮":
             plt.legend()
             st.pyplot(plt)
 
-            BS['Ticker'] = ticker
-            plt.figure(figsize=(10, 4))
-            plt.bar(BS['YearQuarter'][:12], BS['Total Assets'][:12], label='Total Assetes by Quarter')
-            plt.title('Total Assetes by Quarter')
-            plt.xlabel('YearQuarter')
-            plt.ylabel('Total Assetes')
-            plt.legend()
-
-
+            
             columns_to_scale = ['Ticker_cat','Open', 'High', 'Low', 'Close', 'Adj. Close', 'Volume', 'week', 'First_day', 'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7', 'V_EMA_7', 'EMA_14', 'V_EMA_14']
             X_scaled = scaler.transform(df[columns_to_scale])
             prediction = model.predict(X_scaled)
@@ -141,3 +133,11 @@ elif page == "Show Financials 📊":
     ticker = st.selectbox("Select Ticker for Financials", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
     company_financials = company_data[company_data['Ticker'] == ticker]
     st.dataframe(company_financials)
+
+    BS = BS[BS['Ticker'] == ticker]
+    plt.figure(figsize=(10, 4))
+    plt.bar(BS['YearQuarter'][:12], BS['Total Assets'][:12], label='Total Assetes by Quarter')
+    plt.title('Total Assetes by Quarter')
+    plt.xlabel('YearQuarter')
+    plt.ylabel('Total Assetes')
+    plt.legend()
