@@ -141,3 +141,5 @@ elif page == "Show Financials 📊":
     plt.xlabel('YearQuarter')
     plt.ylabel('Total Assetes')
     plt.legend()
+    st.pyplot(plt)
+
