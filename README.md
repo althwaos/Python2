@@ -32,7 +32,7 @@ We have selected the decision tree model becuase in our approach we developed on
 
 ### Running the Script
 
-The script `main.py` processes data, trains the model, and saves the output without requiring any arguments. Ensure that this 'us-shareprices-daily.csv' data set is downloaded in your 'Data Folder' before execution.
+The script `main.py` processes data, trains the model, and saves the output without requiring any arguments. Ensure that this `us-shareprices-daily.csv` data set is downloaded in your `Data Folder` before execution.
 
 
 ## Streamlit notebook
