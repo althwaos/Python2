@@ -28,17 +28,7 @@ class PySimFin:
             logging.error(f"Request failed: {e}")
             return pd.DataFrame()
 
-    def get_financial_statement(self, ticker, start, end):
-        url = f"{self.base_url}/companies/statements/compact?ticker={ticker}&start={start}&end={end}"
-        try:
-            response = requests.get(url, headers=self.headers)
-            response.raise_for_status()
-            data = response.json()
-            df = pd.DataFrame(data[0]['data'])
-            return df
-        except requests.RequestException as e:
-            logging.error(f"Request failed: {e}")
-            return pd.DataFrame()
+
 
 ticker_mapping = {
     'AAPL': 1,
@@ -138,7 +128,7 @@ elif page == "Predict Next Day 🔮":
             df = prepare_data(df)
             df['Ticker_cat'] = ticker_mapping[ticker]
             plt.figure(figsize=(10, 4))
-            plt.plot(pd.to_datetime(df['Date']), df['Close'], label='Close Price')
+            plt.plot(pd.to_datetime(df['Date'][:90]), df['Close'], label='Close Price')
             plt.title('Close Price by Day for the Last Year')
             plt.xlabel('Date')
             plt.ylabel('Close Price ($)')
