@@ -175,6 +175,7 @@ elif page == "Predict Next Day 🔮":
 
             balance,stocks_held,buying_price = simulate_trading(df)
             current_wallet = current_wallent_value(balance, stocks_held,df['Close'].iloc[-1])
+            st.info(f"The applied strategy is: if tomorrow predicted price is negative and today closing price is 2% less than SMA14 days then buy with all existing budget, and only sell when opoosite happen ")
             st.title(f"if you invested with {ticker} then you would:")
             st.write(f"Your starting balance was: 10,000$")
             st.write(f"Current balance is: {balance}$")
