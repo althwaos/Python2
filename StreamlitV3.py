@@ -179,7 +179,7 @@ elif page == "Predict Next Day 🔮":
             st.title(f"if you invested with {ticker} then you would:")
             st.write(f"Your starting balance was: 10,000$")
             st.write(f"Current balance is: {balance}$")
-            st.write(f"Current number of stocks is: {stocks_held} with a cost of {buying_price*stocks_held}$")
+            st.write(f"Current number of stocks is: {stocks_held} with a cost of {(buying_price*stocks_held):.1f}$")
             st.write(f"Current balance as of today price: {current_wallet:.1f}$","🟢" if current_wallet<balance else "🟠")
 
 
