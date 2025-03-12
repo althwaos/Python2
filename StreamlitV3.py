@@ -129,6 +129,7 @@ elif page == "Predict Next Day 🔮":
             df['Ticker_cat'] = ticker_mapping[ticker]
             plt.figure(figsize=(10, 4))
             plt.plot(pd.to_datetime(df['Date'][:90]), df['Close'], label='Close Price')
+            plt.plot(pd.to_datetime(df['Date'][:90]), df['SMA_14'], label='7-Day SMA', color='red')
             plt.title('Close Price by Day for the Last Year')
             plt.xlabel('Date')
             plt.ylabel('Close Price ($)')
