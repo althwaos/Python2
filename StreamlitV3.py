@@ -54,6 +54,11 @@ def simulate_trading(df):
     
     return balance, stocks_held
 
+def current_wallent_value (balance, stocks, today_price):
+    if balance == 0:
+        value = stocks*today_price
+    else:
+        0
 
 ticker_mapping = {
     'AAPL': 1,
@@ -168,10 +173,14 @@ elif page == "Predict Next Day 🔮":
             st.write("Prediction for next day:", "🟢 Positive 🟢" if prediction[0] else "🟠 Negative 🟠")
 
             balance,stocks_held = simulate_trading(df)
+            current_wallet = current_wallent_value(balance, stocks_held,df['Close'].iloc[-1])
             st.title(f"if you invested with {ticker} then you would:")
-            st.title(f"Your starting balance was: 10,000$")
-            st.title(f"Your current balance is: {balance}$")
-            st.title(f"Your current number of stocks is: {stocks_held}$")
+            st.info(f"Your starting balance was: 10,000$")
+            st.info(f"Your current balance is: {balance}$")
+            st.info(f"Your current number of stocks is: {stocks_held}")
+            st.info(f"Your current balance as of today price: {current_wallet}")
+
+
 
 
 
