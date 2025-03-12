@@ -128,8 +128,6 @@ elif page == "Predict Next Day 🔮":
         df = simfin_api.get_share_prices(ticker, "2025-01-01", "2025-06-01")
         if not df.empty:
          df = prepare_data(df)
-        final_balance = simulate_trading(df, model, scaler)
-        st.write(f"Final balance after trading simulation: ${final_balance:.2f}")
         plt.figure(figsize=(10, 4))
         plt.plot(df['Date'], df['Close'], label='Close Price')
         plt.plot(df['Date'], df['SMA_14'], label='14-Day SMA', color='red')
