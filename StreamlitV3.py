@@ -77,34 +77,6 @@ BS = pd.read_csv('us-balance-quarterly.csv', sep=";")
 BS['YearQuarter'] = BS['Fiscal Year'].astype(str) + BS['Fiscal Period']
 
 
-def simulate_trading(df, model, scaler):
-    initial_balance = 10000  # Initial balance to simulate trading
-    stocks_held = 0
-    balance = initial_balance
-    prices = df['Close']
-    sma_14 = df['SMA_14']
-    for i in range(len(df) - 1):  # loop through the data frame
-        today_close = prices.iloc[i]
-        today_sma = sma_14.iloc[i]
-        predicted_tomorrow = model.predict(scaler.transform(df.iloc[[i]]))[0]
-        
-        # Buy condition
-        if today_close < today_sma * 0.98 and predicted_tomorrow == 0:
-            stocks_held = balance / today_close
-            balance = 0  # all money is used to buy stocks
-            logging.info(f"Bought stocks at {today_close}, total stocks held: {stocks_held}")
-        
-        # Sell condition
-        if today_close > today_sma * 1.02 and predicted_tomorrow == 1:
-            balance = stocks_held * today_close
-            stocks_held = 0  # all stocks sold
-            logging.info(f"Sold stocks at {today_close}, total balance: {balance}")
-    
-    # Final evaluation of the portfolio
-    if stocks_held > 0:
-        balance = stocks_held * prices.iloc[-1]  # sell all at the last available price
-    return balance
-
 if page == "Overview 📄":
     st.title("Project Overview 🌟")
     st.write("""
