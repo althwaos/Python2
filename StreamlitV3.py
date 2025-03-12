@@ -28,6 +28,31 @@ class PySimFin:
             logging.error(f"Request failed: {e}")
             return pd.DataFrame()
 
+def simulate_trading(df):
+    initial_balance = 10000  # Initial balance to simulate trading
+    stocks_held = 0
+    balance = initial_balance
+    prices = df['Close']
+    sma_14 = df['SMA_14']
+    for i in range(len(df) - 1):  # loop through the data frame
+        today_close = prices.iloc[i]
+        tomorrow_close = prices.iloc[i+1]
+        today_sma = sma_14.iloc[i]
+        predicted_tomorrow = prediction[i]
+        
+        # Buy condition
+        if balance!= 0 and today_close < today_sma * 0.98 and predicted_tomorrow == 0:
+            stocks_held = balance / tomorrow_close
+            balance = 0  # all money is used to buy stocks
+            logging.info(f"Bought stocks at {today_close}, total stocks held: {stocks_held}")
+        
+        # Sell condition
+        if balance==0 and today_close > today_sma * 1.02 and predicted_tomorrow == 1:
+            balance = stocks_held * tomorrow_close
+            stocks_held = 0  # all stocks sold
+            logging.info(f"Sold stocks at {today_close}, total balance: {balance}")
+    
+    return balance, stocks_held
 
 
 ticker_mapping = {
@@ -141,6 +166,16 @@ elif page == "Predict Next Day 🔮":
             X_scaled = scaler.transform(df[columns_to_scale])
             prediction = model.predict(X_scaled)
             st.write("Prediction for next day:", "🟢 Positive 🟢" if prediction[0] else "🟠 Negative 🟠")
+
+            balance,stocks_held = simulate_trading(df)
+            st.title(f"if you invested with {ticker} then you would:")
+            st.title(f"Your starting balance was: 10,000$")
+            st.title(f"Your current balance is: {balance}$")
+            st.title(f"Your current number of stocks is: {stocks_held}$")
+
+
+
+
 
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
