@@ -76,6 +76,35 @@ company_data = pd.read_csv('us-companies.csv', sep=";")
 BS = pd.read_csv('us-balance-quarterly.csv', sep=";")
 BS['YearQuarter'] = BS['Fiscal Year'].astype(str) + BS['Fiscal Period']
 
+
+def simulate_trading(df, model, scaler):
+    initial_balance = 10000  # Initial balance to simulate trading
+    stocks_held = 0
+    balance = initial_balance
+    prices = df['Close']
+    sma_14 = df['SMA_14']
+    for i in range(len(df) - 1):  # loop through the data frame
+        today_close = prices.iloc[i]
+        today_sma = sma_14.iloc[i]
+        predicted_tomorrow = model.predict(scaler.transform(df.iloc[[i]]))[0]
+        
+        # Buy condition
+        if today_close < today_sma * 0.98 and predicted_tomorrow == 0:
+            stocks_held = balance / today_close
+            balance = 0  # all money is used to buy stocks
+            logging.info(f"Bought stocks at {today_close}, total stocks held: {stocks_held}")
+        
+        # Sell condition
+        if today_close > today_sma * 1.02 and predicted_tomorrow == 1:
+            balance = stocks_held * today_close
+            stocks_held = 0  # all stocks sold
+            logging.info(f"Sold stocks at {today_close}, total balance: {balance}")
+    
+    # Final evaluation of the portfolio
+    if stocks_held > 0:
+        balance = stocks_held * prices.iloc[-1]  # sell all at the last available price
+    return balance
+
 if page == "Overview 📄":
     st.title("Project Overview 🌟")
     st.write("""
@@ -119,28 +148,30 @@ if page == "Overview 📄":
         - **Emiliano Puertas**: Responsible for the full documentation and quality assurance, ensuring that all aspects of the project adhere to the highest standards of clarity and accuracy.
     """)
 
+
 elif page == "Predict Next Day 🔮":
     st.title("Stock Prediction App 🔍")
     ticker = st.selectbox("Select Ticker", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
     if st.button("Predict 🔮"):
         df = simfin_api.get_share_prices(ticker, "2025-01-01", "2025-06-01")
         if not df.empty:
-            df = prepare_data(df)
-            df['Ticker_cat'] = ticker_mapping[ticker]
-            plt.figure(figsize=(10, 4))
-            plt.plot(pd.to_datetime(df['Date'][:90]), df['Close'], label='Close Price')
-            plt.plot(pd.to_datetime(df['Date'][:90]), df['SMA_14'], label='14-Day SMA', color='red')
-            plt.title('Close Price by Day for the Last Year')
-            plt.xlabel('Date')
-            plt.ylabel('Close Price ($)')
-            plt.legend()
-            st.pyplot(plt)
+         df = prepare_data(df)
+        final_balance = simulate_trading(df, model, scaler)
+        st.write(f"Final balance after trading simulation: ${final_balance:.2f}")
+        plt.figure(figsize=(10, 4))
+        plt.plot(df['Date'], df['Close'], label='Close Price')
+        plt.plot(df['Date'], df['SMA_14'], label='14-Day SMA', color='red')
+        plt.title(f'Price and 14-Day SMA for {ticker}')
+        plt.xlabel('Date')
+        plt.ylabel('Price ($)')
+        plt.legend()
+        st.pyplot()
 
             
-            columns_to_scale = ['Ticker_cat','Open', 'High', 'Low', 'Close', 'Adj. Close', 'Volume', 'week', 'First_day', 'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7', 'V_EMA_7', 'EMA_14', 'V_EMA_14']
-            X_scaled = scaler.transform(df[columns_to_scale])
-            prediction = model.predict(X_scaled)
-            st.write("Prediction for next day:", "🟢 Positive 🟢" if prediction[0] else "🟠 Negative 🟠")
+        columns_to_scale = ['Ticker_cat','Open', 'High', 'Low', 'Close', 'Adj. Close', 'Volume', 'week', 'First_day', 'Last_day', 'SMA_7', 'V_SMA_7', 'SMA_14', 'V_SMA_14', 'EMA_7', 'V_EMA_7', 'EMA_14', 'V_EMA_14']
+        X_scaled = scaler.transform(df[columns_to_scale])
+        prediction = model.predict(X_scaled)
+        st.write("Prediction for next day:", "🟢 Positive 🟢" if prediction[0] else "🟠 Negative 🟠")
 
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
