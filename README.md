@@ -43,7 +43,8 @@ The script is basically reciving an API call depedning on the user selection of 
 
 ### Data
 
-- **Source**: One dataset is an API retriving data of daily stock market for the sleceted ticker. Another two datasets, are batch data sets and they are used to show more details about the company.
+- **API**: API retriving data of daily stock market for the sleceted ticker.
+-**Batches Data**: Another two datasets, are companies detailes and balance sheets. 
   
 ### Data preparation
 
