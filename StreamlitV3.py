@@ -182,11 +182,6 @@ elif page == "Predict Next Day 🔮":
             st.write(f"Current balance as of today price: {current_wallet:.1f}$","🟢" if current_wallet<balance else "🟠")
 
 
-
-
-
-
-
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
     ticker = st.selectbox("Select Ticker for Financials", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
