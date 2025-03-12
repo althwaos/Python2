@@ -58,8 +58,8 @@ def current_wallent_value (balance, stocks, today_price):
     if balance == 0:
         value = stocks*today_price
     else:
-        0
-
+        value =0
+    return value
 ticker_mapping = {
     'AAPL': 1,
     'META': 2,
