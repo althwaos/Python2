@@ -27,7 +27,7 @@ class PySimFin:
         except requests.RequestException as e:
             logging.error(f"Request failed: {e}")
             return pd.DataFrame()
-
+#This will be used for the strategy simulation
 def simulate_trading(df):
     initial_balance = 10000  # Initial balance to simulate trading
     stocks_held = 0
@@ -84,7 +84,7 @@ simfin_api = PySimFin(api_key='fde00d2f-38ad-43f3-9a83-012077d42da6')
 st.sidebar.title("Navigation 🧭")
 page = st.sidebar.radio("Select a Page:", ["Overview 📄", "Predict Next Day 🔮", "Show Financials 📊"])
 
-# Define a function to prepare data
+# Define a function to prepare data our tested ETL process
 def prepare_data(df):
     df.columns = [
         'Date', 'Dividend Paid', 'Common Shares Outstanding',
@@ -111,6 +111,7 @@ company_data = pd.read_csv('us-companies.csv', sep=";")
 BS = pd.read_csv('us-balance-quarterly.csv', sep=";")
 BS['YearQuarter'] = BS['Fiscal Year'].astype(str) + BS['Fiscal Period']
 
+#First Page: Overview
 if page == "Overview 📄":
     st.title("Project Overview 🌟")
     st.write("""
@@ -153,7 +154,7 @@ if page == "Overview 📄":
         - **Maria do Carmo Brito e Abreu**: Developed the Streamlit application, creating a user-friendly interface that allows users to interact with our predictive models.
         - **Emiliano Puertas**: Responsible for the full documentation and quality assurance, ensuring that all aspects of the project adhere to the highest standards of clarity and accuracy.
     """)
-
+#Page 2 which is for predications and trading strategy
 elif page == "Predict Next Day 🔮":
     st.title("Stock Prediction App 🔍")
     ticker = st.selectbox("Select Ticker", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
@@ -186,7 +187,7 @@ elif page == "Predict Next Day 🔮":
 
             for transaction in transactions:
                 st.write(transaction)
-
+#extra info just for the knowledge of end users
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
     ticker = st.selectbox("Select Ticker for Financials", ['TSLA', 'AAPL', 'MSFT', 'NVDA', 'META'])
