@@ -188,8 +188,9 @@ elif page == "Predict Next Day 🔮":
             dft = pd.DataFrame(transactions)
             # Calculate the cost for each transaction
             dft['Cost'] = dft['price'] * dft['stocks']
+            dft['Profit/Loss'] = dft['Cost'] - dft['Cost'].shift(-1)
             # Rename columns to make them more presentable
-            dft.rename(columns={'type': 'Transaction Type', 'price': 'Price', 'stocks': 'Number of Stocks'}, inplace=True)
+            dft.rename(columns={'type': 'Transaction Type', 'price': 'Price', 'stocks': 'Number of Stocks', 'Profit/Loss':'Profit/Loss'}, inplace=True)
             # Display the DataFrame in Streamlit
             st.table(dft)
 #extra info just for the knowledge of end users
