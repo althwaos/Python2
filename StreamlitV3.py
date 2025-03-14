@@ -181,10 +181,10 @@ elif page == "Predict Next Day 🔮":
             current_wallet = current_wallent_value(balance, stocks_held,df['Close'].iloc[-1])
             st.info(f"The applied strategy is: if tomorrow predicted price is negative and today closing price is 2% less than SMA14 days then buy with all existing budget, and only sell when opoosite happen ")
             st.title(f"Summary of investments in {ticker}:")
-            st.write(f"Starting balanc: 10,000$\tCurrent balance is: {balance}$\t# of Stocks: {stocks_held}\t")
+            st.write(f"Starting balanc: 10,000$\tCurrent balance is: {balance}$\t # of Stocks: {stocks_held}\t")
             st.write(f"Current balance as of today price: {current_wallet:.1f}$","🟢" if current_wallet<balance else "🟠")
             for transaction in transactions:
-                print(transaction)
+                st.write(transaction)
 
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
