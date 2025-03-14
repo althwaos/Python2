@@ -53,7 +53,7 @@ Aliging with the same process we have done in the ETL process, however we are do
 ### Sections of the website
 
 - **Overview**: In this page we are showing overview of the project, tools we used for the project, steps to complete the project, and the team members and responsibilities.
-- **Predict Next Day**: Select a ticker, predict next day if positive or negative, and give some insights in a chart of how the price was closing for the last 90 days.
+- **Predict Next Day**: Select a ticker, predict next day if positive or negative, and give some insights in a chart of how the price was closing for the last 90 days. Additionaly we have added here the suggested trading strategy with a simulation of usage with a 10,000$
 - **Show Financials**: Show some details about the selected company, and the total assets, liabilities, and equity for last 12 quarters. 
 
 
