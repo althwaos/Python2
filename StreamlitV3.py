@@ -34,26 +34,30 @@ def simulate_trading(df):
     balance = initial_balance
     prices = df['Close']
     sma_14 = df['SMA_14']
+    transactions = []  # List to store transaction records
+
     for i in range(len(df) - 1):  # loop through the data frame
         today_close = prices.iloc[i]
         tomorrow_close = prices.iloc[i+1]
         today_sma = sma_14.iloc[i]
         predicted_tomorrow = prediction[i]
-        
+
         # Buy condition
-        if balance!= 0 and today_close < today_sma * 0.98 and predicted_tomorrow == 0:
+        if balance != 0 and today_close < today_sma * 0.98 and predicted_tomorrow == 0:
             stocks_held = balance / tomorrow_close
-            buying_price = tomorrow_close
             balance = 0  # all money is used to buy stocks
-            logging.info(f"Bought stocks at {today_close}, total stocks held: {stocks_held}")
+            transactions.append({'type': 'BUY', 'price': tomorrow_close, 'stocks': stocks_held, 'date': df.index[i + 1]})
+            logging.info(f"Bought {stocks_held} stocks at {tomorrow_close} on {df.index[i + 1]}")
         
         # Sell condition
-        if balance==0 and today_close > today_sma * 1.02 and predicted_tomorrow == 1:
+        if balance == 0 and today_close > today_sma * 1.02 and predicted_tomorrow == 1:
             balance = stocks_held * tomorrow_close
+            transactions.append({'type': 'SELL', 'price': tomorrow_close, 'stocks': stocks_held, 'date': df.index[i + 1]})
             stocks_held = 0  # all stocks sold
-            logging.info(f"Sold stocks at {today_close}, total balance: {balance}")
-    
-    return balance, stocks_held, buying_price
+            logging.info(f"Sold stocks at {tomorrow_close} on {df.index[i + 1]}, total balance: {balance}")
+
+    return balance, stocks_held, transactions
+
 
 def current_wallent_value (balance, stocks, today_price):
     if balance == 0:
@@ -173,15 +177,14 @@ elif page == "Predict Next Day 🔮":
             prediction = model.predict(X_scaled)
             st.write("Prediction for next day:", "🟢 Positive 🟢" if prediction[0] else "🟠 Negative 🟠")
 
-            balance,stocks_held,buying_price = simulate_trading(df)
+            balance,stocks_held,transactions = simulate_trading(df)
             current_wallet = current_wallent_value(balance, stocks_held,df['Close'].iloc[-1])
             st.info(f"The applied strategy is: if tomorrow predicted price is negative and today closing price is 2% less than SMA14 days then buy with all existing budget, and only sell when opoosite happen ")
-            st.title(f"if you invested with {ticker} then you would:")
-            st.write(f"Your starting balance was: 10,000$")
-            st.write(f"Current balance is: {balance}$")
-            st.write(f"Current number of stocks is: {stocks_held} with a cost of {(buying_price*stocks_held):.1f}$")
+            st.title(f"Summary of investments in {ticker}:")
+            st.write(f"Starting balanc: 10,000$\tCurrent balance is: {balance}$\t# of Stocks: {stocks_held}\t")
             st.write(f"Current balance as of today price: {current_wallet:.1f}$","🟢" if current_wallet<balance else "🟠")
-
+            for transaction in transactions:
+                print(transaction)
 
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
