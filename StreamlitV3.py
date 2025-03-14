@@ -46,13 +46,13 @@ def simulate_trading(df):
         if balance != 0 and today_close < today_sma * 0.98 and predicted_tomorrow == 0:
             stocks_held = balance / tomorrow_close
             balance = 0  # all money is used to buy stocks
-            transactions.append({'type': 'BUY', 'price': tomorrow_close, 'stocks': stocks_held, 'date': df.index[i + 1]})
+            transactions.append({'type': 'BUY', 'price': tomorrow_close, 'stocks': stocks_held})
             logging.info(f"Bought {stocks_held} stocks at {tomorrow_close} on {df.index[i + 1]}")
         
         # Sell condition
         if balance == 0 and today_close > today_sma * 1.02 and predicted_tomorrow == 1:
             balance = stocks_held * tomorrow_close
-            transactions.append({'type': 'SELL', 'price': tomorrow_close, 'stocks': stocks_held, 'date': df.index[i + 1]})
+            transactions.append({'type': 'SELL', 'price': tomorrow_close, 'stocks': stocks_held})
             stocks_held = 0  # all stocks sold
             logging.info(f"Sold stocks at {tomorrow_close} on {df.index[i + 1]}, total balance: {balance}")
 
