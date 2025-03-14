@@ -184,9 +184,14 @@ elif page == "Predict Next Day 🔮":
             st.title(f"Summary of investments in {ticker}:")
             st.markdown(f"**Starting Balance:** 10,000 **| Current Balance:** {balance:,.2f} **| Number of Stocks:** {stocks_held}")
             st.markdown(f'**Current balance as of today price:** {current_wallet:.1f} {"🟢" if current_wallet < balance else "🟠"}')
-
-            for transaction in transactions:
-                st.write(transaction)
+            st.markdown(f'All transtactions summary')
+            dft = pd.DataFrame(transactions)
+            # Calculate the cost for each transaction
+            dft['Cost'] = dft['price'] * dft['stocks']
+            # Rename columns to make them more presentable
+            dft.rename(columns={'type': 'Transaction Type', 'price': 'Price', 'stocks': 'Number of Stocks'}, inplace=True)
+            # Display the DataFrame in Streamlit
+            st.table(dft)
 #extra info just for the knowledge of end users
 elif page == "Show Financials 📊":
     st.title("Financial Overview 📈")
