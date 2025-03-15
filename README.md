@@ -4,6 +4,13 @@ This repository contains two main components: an ETL and machine learning script
 
 https://python2-a6dqddvgf8wjdwukaefyrs.streamlit.app/
 
+## GitHub files
+You will find a lot of files in this project, the reason behind it is the way we had our project execution was delivered in steps: 
+1- Dividing the workload to all team members
+2- Each member was responsible for their own notebook
+3- After developing these notebooks (ETL, ML, API calls, and Streamlit) and making sure that they worked well-together
+4- Then we combined the ETL process and ML in one script, and connected the streamlit app to the script outcome and made the API calls within the streamlit app
+
 ## ETL and ML Script
 
 ### Overview
@@ -17,17 +24,17 @@ The script predicts stock price movements for the next day using historical stoc
 
 ### Data preparation
 
-**After reseraching the stock market we found out that the following details were important to add in order to predict next day price action:**
+**After researching the stock market we found out that the following details were important to add in order to predict next day price action:**
 - Simple Moving Average (SMA) for closing price in both 7 days and 14 days window.
 - Exponential Moving Average (EMA) for closing price in both 7 days and 14 days window.
-- Simple Moving Average (SMA) for volumne in both 7 days and 14 days window.
-- Exponential Moving Average (EMA) for volumne  in both 7 days and 14 days window.
+- Simple Moving Average (SMA) for volume in both 7 days and 14 days window.
+- Exponential Moving Average (EMA) for volume in both 7 days and 14 days window.
 - First Day of the trading week or last day
   
 ### Model and Scaling
 
 - **Decision Tree Model**: Stored in `DecisionTreeClassifier.pkl`.
-We have selected the decision tree model becuase in our approach we developed one model that is able to interact differently depedning on the ticker, and for that we needed to go with the Decision Tree Model
+We have selected the decision tree model because in our approach we developed one model that is able to interact differently depending on the ticker, and for that we needed to go with the Decision Tree Model
 - **Scaler**: MinMaxScaler for feature scaling, stored in `scaler_DecisionTree.pkl`.
 
 ### Running the Script
@@ -39,16 +46,16 @@ The script `main.py` processes data, trains the model, and saves the output with
 
 ### Overview
 
-The script is basically reciving an API call depedning on the user selection of the 5 availble tickers, and then process the data in-spot, implement the exisitng ML developed model and the scalar to predict next day price. Additionaly, we have added some more user-firendly interactions such as emojis and a lot of charts for better user interaction with the website. 
+The script is basically receiving an API call depending on the user selection of the 5 available tickers, and then process the data in-spot, implement the existing ML developed model and the scalar to predict next day price. Additionaly, we have added some more user-friendly interactions such as emojis and a lot of charts for better user interaction with the website. 
 
 ### Data
 
 - **API**: API retriving data of daily stock market for the sleceted ticker.
--**Batches Data**: Another two datasets, are companies detailes and balance sheets. 
+-**Batches Data**: Another two datasets, are companies details and balance sheets. 
   
 ### Data preparation
 
-Aliging with the same process we have done in the ETL process, however we are doing it here for the API call. 
+Aligning with the same process we have done in the ETL process, however we are doing it here for the API call. 
   
 ### Sections of the website
 
