@@ -2,7 +2,7 @@
 - ✅ Presentation 10-15 miutes (attached in the blackboard)
 - ✅ `main.py` scrpipt that auto-generate the ML model
 - ✅ `StreamlitV3.py` Streamlit application
-- ✅ Excutive summary
+- ✅ `Executive Summary.pdf` Executive Summary
 - ✅ `README.md` file
 
 # Stock Price Prediction System
