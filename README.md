@@ -1,9 +1,9 @@
 # Metting Porject deliveries requirements:
-✅ Presentation 10-15 miutes (attached in the blackboard)
-✅ `main.py` scrpipt that auto-generate the ML model
-✅ Streamlit application
-✅ Excutive summary
-✅ README.md file
+- ✅ Presentation 10-15 miutes (attached in the blackboard)
+- ✅ `main.py` scrpipt that auto-generate the ML model
+- ✅ `StreamlitV3.py` Streamlit application
+- ✅ Excutive summary
+- ✅ `README.md` file
 
 # Stock Price Prediction System
 
