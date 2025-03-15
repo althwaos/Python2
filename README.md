@@ -11,7 +11,7 @@ You will find a lot of files in this project, the reason behind it is the way we
 - After developing these notebooks (ETL, ML, API calls, and Streamlit) and making sure that they worked well-together
 - Then we combined the ETL process and ML in one script, and connected the streamlit app to the script outcome and made the API calls within the streamlit app
 
-In  `Project Time Line (Python).xlsx`  file you may find all the details. 
+In  `Project Time Line (Python).xlsx`  file you may find all the details of workload distribution. 
 
 ## ETL and ML Script
 
