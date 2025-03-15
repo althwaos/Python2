@@ -6,10 +6,12 @@ https://python2-a6dqddvgf8wjdwukaefyrs.streamlit.app/
 
 ## GitHub files
 You will find a lot of files in this project, the reason behind it is the way we had our project execution was delivered in steps: 
-1- Dividing the workload to all team members
-2- Each member was responsible for their own notebook
-3- After developing these notebooks (ETL, ML, API calls, and Streamlit) and making sure that they worked well-together
-4- Then we combined the ETL process and ML in one script, and connected the streamlit app to the script outcome and made the API calls within the streamlit app
+- Dividing the workload to all team members
+- Each member was responsible for their own notebook
+- After developing these notebooks (ETL, ML, API calls, and Streamlit) and making sure that they worked well-together
+- Then we combined the ETL process and ML in one script, and connected the streamlit app to the script outcome and made the API calls within the streamlit app
+
+In  `Project Time Line (Python).xlsx`  file you may find all the details. 
 
 ## ETL and ML Script
 
